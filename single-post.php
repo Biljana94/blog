@@ -1,6 +1,4 @@
-<?php
-    include "db.php";
-?>
+<?php include "db.php"; ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,9 +22,7 @@
 
 <body>
 
-<?php
-    include "header.php";//ubacili smo header
-?>
+<?php include "header.php"; ?>
 
 
 <main role="main" class="container">
@@ -41,7 +37,7 @@
                 //die();
  
                 // pripremamo upit
-                $sql = 'SELECT * FROM posts WHERE id = ' . $post_id;
+                $sql = "SELECT * FROM posts WHERE id = $post_id";
                 $statement = $connection->prepare($sql);
 
                 // izvrsavamo upit
@@ -61,7 +57,7 @@
 
             ?>
 
-            <!-- ovde sam stavila title,created_at,author i body u singlePost. Kad kliknem na naslov posta da mi otvori jedan post -->
+            <!-- ovde sam stavila title,created_at,author i body u singlePost. Kad kliknem na naslov posta da mi otvori taj post -->
             <div class="blog-post">
                 <h2 class="blog-post-title"><?php echo($singlePost['title']); ?></h2>
                 <p class="blog-post-meta"><?php echo($singlePost['created_at']); ?> by <a href="#"><?php echo($singlePost['author']); ?></a></p>
@@ -70,25 +66,61 @@
             </div>
 
 
+            <!--DELETE POST dugme-->
+            <form name="deletePost" action="delete-post.php" method="post">
+                <input type="submit" class="btn btn-primary">Delete post</input><br>
+                <input type="hidden" name="postId" value=<?php echo($post_id); ?>>
+            </form>
 
-            <nav class="blog-pagination">
-                    <a class="btn btn-outline-primary" href="#">Older</a>
-                    <a class="btn btn-outline-secondary disabled" href="#">Newer</a>
-            </nav>
+
+
+            <!--FORMA ZA UNOSENJE KOMENTARA-->
+                    <!--otvarajuci <form> tag (kad unesemo podaci se salju u bazu)-->
+                        <!--sa ACTION pokrecemo stranicu create-comment.php-->
+                        <!--sa ONSUBMIT-kad se klikne dugme 'Submit' kao izlazna vrednost vraca se funkcija commentForm() iz javascript fajla(js/js.js)-->
+                        <!--sa METHOD="POST" saljemo podatke na server u bazu podataka pa tek onda iz nje mozemo da iscitavamo podatke-->
+            <form name="firstFrom" action="create-comment.php" onsubmit="return commentForm()" method="post">
+                    <!-- ono sto stoji u input name='IME_INPUTA' se dodeljuje u $_POST['IME_INPUTA'],
+                    primer: <input type="hidden"  name="postId" value=1>   kreira u $_POST  sledece: 
+                    $_POST['postId'] = 1 (tj `value` iz inputa); kada odes na sledecu stranu mozes da pristupis $_POST['postId'] i dobijes vrednost koju sadrzi -->
+
+                    <!--labela koja ispisuje 'Your name'-->
+                <label for="formName">Your name</label> 
+                    <!--input polje u koje unosimo ime autora-->
+                <input name="formName" type="text" class="" placeholder="Enter name"><br>
+                <small>Your name and comment are public</small><br>
+
+                    <!--labela koja ispisuje 'Enter your name'-->
+                <label for="comments">Enter your comment</label><br>
+                    <!--textarea polje u koje unosimo nas komentar-->
+                <textarea name="comment" class="" rows="5" cols="50"></textarea> <br>
+                    <!--input koji je sakriven i koji komentar lepi za id tog posta ($post_id)-->
+                <input type="hidden"  name="postId" value=<?php echo($post_id); ?> >
+
+                    <!--input SUBMIT koji je dugme za slanje komentara u bazu podataka (iz baze se salje na stranicu posta)-->
+                <input type="submit" class="btn btn-primary"></input><br>
+
+            </form>
+
+
+            <!--dugme koje ce da sakriva komentare ili da ih pokazuje-->
+            <button id="myBtn" type="button" class="btn btn-default">Hide comments</button> 
+
+            <?php include "comments.php";?> 
+
+            <!--UKLJUCILA SAM JAVASCRIPT U OVU STRANICU-->
+            <script src='js/js.js'></script>
+
 
         </div><!-- /.blog-main -->
 
-        <?php
-            //include "sidebar.php";//ubacili smo sidebar u index fajl
-        ?>
+        <?php include "sidebar.php";//ubacili smo sidebar u index fajl ?>
 
     </div><!-- /.row -->
 
 </main><!-- /.container -->
 
-<?php 
-    include "footer.php";//ubacili smo footer
-?>
+<?php include "footer.php"; ?>
 
 </body>
 </html>

@@ -1,0 +1,31 @@
+* {
+    font-size: 14px;
+}
+
+/*Navbar boja*/
+header .blog-masthead {
+    background-color: #b34848;
+}
+
+
+/*<header> <h1> naslov - boja*/
+header .blog-header .container .blog-title {
+    color: #b34848;
+}
+
+/*<h2> naslovi u posts.php fajlu - boja*/
+    /*underline je automatski iste boje kao i naslov*/
+main .row .blog-main .blog-post .blog-post-title a {
+    color: #b34848;
+}
+
+main .row .blog-main .blog-post .blog-post-title a:hover {
+    color: #b34848;
+}
+
+/*naslovi sidebar-a - boja*/
+.blog-sidebar .sidebar-module h4 {
+    color: #b34848;
+}
+
+
